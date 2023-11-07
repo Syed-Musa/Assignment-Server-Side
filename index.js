@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
@@ -29,6 +30,19 @@ async function run() {
     const jobsCollection = client.db('onlineMarket').collection('jobs');
     const companyCollection = client.db('onlineMarket').collection('companies');
 
+    app.post('/jwt', async(req, res)=>{
+      const user = req.body;
+      console.log(user);
+      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1h'})
+      res
+      .cookie('token', token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'none'
+      })
+      .send({success: true});
+    })
+
     app.get('/jobs', async(req, res)=>{
       const cursor = jobsCollection.find();
       const result = await cursor.toArray();
@@ -42,6 +56,12 @@ async function run() {
         projection: { deedline: 1, price: 1, det_id: 1, images: 1},
       };
       const result = await jobsCollection.findOne(query, options);
+      res.send(result);
+    });
+
+    app.get('/postedjob', async(req, res)=>{
+      const cursor = jobsCollection.find();
+      const result = await cursor.toArray();
       res.send(result);
     });
 
