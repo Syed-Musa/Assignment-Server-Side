@@ -43,6 +43,13 @@ async function run() {
       };
       const result = await jobsCollection.findOne(query, options);
       res.send(result);
+    });
+
+    app.post('/jobs', async(req, res)=>{
+      const newJobs = req.body;
+      console.log(newJobs);
+      const result = await jobsCollection.insertOne(newJobs);
+      res.send(result);
     })
 
     app.get('/companies', async(req, res)=>{
