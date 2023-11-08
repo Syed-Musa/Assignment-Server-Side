@@ -9,7 +9,7 @@ const port = process.env.PORT || 5000
 
 app.use(cors({
   origin: [
-    'online-markets-de019.web.app',
+    'https://online-markets-de019.web.app',
     'online-markets-de019.firebaseapp.com'
   ],
   credentials: true
