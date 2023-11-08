@@ -32,20 +32,20 @@ const logger = async(req, res, next) =>{
   next();
 };
 
-const verifyToken = async(req, res, next) =>{
-  const token = req.cookies?.token;
-  // console.log('token verified', token)
-  if(!token){
-    return res.status(401).send({message: 'unaothorized access'})
-  }
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded)=>{
-    if(err){
-      return res.status(401).send({message: 'unaothorized access'})
-    }
-    req.user = decoded;
-    next();
-  })
-}
+// const verifyToken = async(req, res, next) =>{
+//   const token = req.cookies?.token;
+//   // console.log('token verified', token)
+//   if(!token){
+//     return res.status(401).send({message: 'unaothorized access'})
+//   }
+//   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded)=>{
+//     if(err){
+//       return res.status(401).send({message: 'unaothorized access'})
+//     }
+//     req.user = decoded;
+//     next();
+//   })
+// }
 
 async function run() {
   try {
