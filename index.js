@@ -8,7 +8,10 @@ const app = express();
 const port = process.env.PORT || 5000
 
 app.use(cors({
-  origin: ['http://localhost:5173'],
+  origin: [
+    'online-markets-de019.web.app',
+    'online-markets-de019.firebaseapp.com'
+  ],
   credentials: true
 }));
 app.use(express.json());
@@ -66,6 +69,7 @@ async function run() {
         httpOnly: true,
         secure: true,
         sameSite: 'none'
+        
       })
       .send({success: true});
     })
